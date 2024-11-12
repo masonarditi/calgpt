@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Send } from "lucide-react"
+import { sendQuery } from '@/lib/api';
 
 // Define the Message type
 type Message = {
@@ -48,28 +49,7 @@ export function CalGpt() {
       setMessages(prevMessages => [...prevMessages, { text: input, sender: 'user' }]);
       setIsLoading(true);
       
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          query: input,
-          limit: 1,
-          wishlist: {} 
-        })
-      };
-
-      console.log('Sending request:', options);
-
-      fetch('http://localhost:3001/proxy', options)
-        .then(async response => {
-          console.log('Response status:', response.status);
-          const data = await response.json();
-          console.log('Response data:', JSON.stringify(data, null, 2));
-          if (!response.ok) throw new Error(data.error || 'Server error');
-          return data;
-        })
+      sendQuery(input)
         .then((response: SidResponse) => {
           console.log('Processing response:', response);
           if (response[0]?.content) {
