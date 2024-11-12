@@ -79,7 +79,7 @@ export function CalGpt() {
     <div className="flex flex-col min-h-[100dvh] bg-gradient-to-b from-[#003262] via-[#3B7EA1] to-[#FDB515] dark:from-[#003262] dark:via-[#1F3A93] dark:to-[#C4820E] transition-colors duration-500">
       <header className="py-4 px-4 sm:py-6 sm:px-6 lg:px-8 bg-[#003262] shadow-lg">
         <div className="flex items-center justify-center space-x-3">
-          <img 
+          <img
             src="/BerkeleyLogoReal.png" 
             alt="Berkeley Logo" 
             className="h-8 w-auto"
@@ -101,7 +101,7 @@ export function CalGpt() {
                 {messages.length === 0 && (
                   <div className="text-center text-gray-500 dark:text-gray-400 py-8">
                     <p>Welcome to CalGPT! Ask me anything about Berkeley courses.</p>
-                    <p className="text-sm mt-2">Example: "What are the prerequisites for CS61A?"</p>
+                    <p className="text-sm mt-2">Example: What are the prerequisites for CS61A?</p>
                   </div>
                 )}
                 {messages.map((message, index) => (

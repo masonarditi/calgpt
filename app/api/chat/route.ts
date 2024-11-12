@@ -62,7 +62,9 @@ export async function POST(request: Request) {
       metadata: {}
     }]);
 
-  } catch (error) {
-    return Response.json({ error: 'Error processing request' }, { status: 500 });
+  } catch (err: unknown) {
+    console.error('API Error:', err);
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+    return Response.json({ error: errorMessage }, { status: 500 });
   }
 } 
