@@ -4,7 +4,6 @@ export async function POST(request: Request) {
   try {
     const { query } = await request.json();
 
-    // First, get response from SID API
     const sidResponse = await fetch(config.sidApiUrl, {
       method: 'POST',
       headers: {
@@ -21,7 +20,6 @@ export async function POST(request: Request) {
     const sidData = await sidResponse.json();
     const originalContent = sidData[0]?.content || "No response available";
 
-    // Then, send to OpenAI for summarization
     const openaiResponse = await fetch(config.openAiApiUrl, {
       method: 'POST',
       headers: {
@@ -29,15 +27,15 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
-            content: `You are a knowledgeable UC Berkeley academic advisor...`
+            content: "You are a knowledgeable UC Berkeley academic advisor with expertise in course requirements, prerequisites, and academic policies. Your responses should: - Be direct and concise (2-3 sentences maximum)  Include specific course codes, unit counts, and prerequisites when relevant. Focus on factual, actionable information. Maintain a supportive tone and use emojis to be more engaging. and funny."
           },
           {
             role: "user",
-            content: originalContent
+            content: `User Question: ${query}\n\nRelevant Information: ${originalContent}`
           }
         ],
         max_tokens: 150,
